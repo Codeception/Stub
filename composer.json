@@ -1,0 +1,16 @@
+{
+    "name": "codeception/stub",
+    "description":"Flexible Stub wrapper for PHPUnit's Mock Builder",
+    "type": "library",
+    "license":"MIT",
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "Codeception\\Util\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">=5.4.0 <8.0",
+        "phpunit/phpunit": ">4.8.20 <7.0"
+    }
+}
