@@ -2,6 +2,8 @@
 
 namespace Codeception\Stub;
 
+require_once __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'shim.php';
+
 use PHPUnit\Framework\MockObject\Matcher\InvokedAtLeastOnce;
 use PHPUnit\Framework\MockObject\Matcher\InvokedCount;
 
@@ -13,15 +15,19 @@ class Expected
      * If method invoked, it will immediately throw an
      * exception.
      *
-     * ``` php
+     * ```php
      * <?php
-     * $user = Stub::make('User', array('getName' => Stub::never(), 'someMethod' => function() {}));
+     * use \Codeception\Stub\Expected;
+     *
+     * $user = $this->make('User', [
+     *      'getName' => Expected::never(),
+     *      'someMethod' => function() {}
+     * ]);
      * $user->someMethod();
      * ?>
      * ```
      *
      * @param mixed $params
-     *
      * @return StubMarshaler
      */
     public static function never($params = null)
@@ -41,16 +47,24 @@ class Expected
      *
      * ``` php
      * <?php
-     * $user = Stub::make(
+     * use \Codeception\Stub\Expected;
+     *
+     * $user = $this->make(
      *     'User',
      *     array(
-     *         'getName' => Expected::once(function() { return 'Davert'; }),
+     *         'getName' => Expected::once('Davert'),
      *         'someMethod' => function() {}
      *     )
      * );
      * $userName = $user->getName();
      * $this->assertEquals('Davert', $userName);
      * ?>
+     * ```
+     * Alternatively, a function can be passed as parameter:
+     *
+     * ```php
+     * <?php
+     * Expected::once(function() { return Faker::name() });
      * ```
      *
      * @param mixed $params
@@ -73,16 +87,26 @@ class Expected
      *
      * ``` php
      * <?php
-     * $user = Stub::make(
+     * use \Codeception\Stub\Expected;
+     *
+     * $user = $this->make(
      *     'User',
      *     array(
-     *         'getName' => Expected::atLeastOnce(function() { return 'Davert'; }),
+     *         'getName' => Expected::atLeastOnce('Davert')),
      *         'someMethod' => function() {}
      *     )
      * );
      * $user->getName();
-     * $user->getName();
+     * $userName = $user->getName();
+     * $this->assertEquals('Davert', $userName);
      * ?>
+     * ```
+     *
+     * Alternatively, a function can be passed as parameter:
+     *
+     * ```php
+     * <?php
+     * Expected::atLeastOnce(function() { return Faker::name() });
      * ```
      *
      * @param mixed $params
@@ -107,17 +131,27 @@ class Expected
      *
      * ``` php
      * <?php
-     * $user = Stub::make(
+     * use \Codeception\Stub;
+     * use \Codeception\Stub\Expected;
+     *
+     * $user = $this->make(
      *     'User',
      *     array(
-     *         'getName' => Expected::exactly(3, function() { return 'Davert'; }),
+     *         'getName' => Expected::exactly(3, 'Davert'),
      *         'someMethod' => function() {}
      *     )
      * );
      * $user->getName();
      * $user->getName();
-     * $user->getName();
+     * $userName = $user->getName();
+     * $this->assertEquals('Davert', $userName);
      * ?>
+     * ```
+     * Alternatively, a function can be passed as parameter:
+     *
+     * ```php
+     * <?php
+     * Expected::exactly(function() { return Faker::name() });
      * ```
      *
      * @param int $count
@@ -135,12 +169,12 @@ class Expected
 
     private static function closureIfNull($params)
     {
-        if ($params == null) {
-            return function () {
-            };
-        } else {
+        if ($params instanceof \Closure) {
             return $params;
         }
+        return function() use ($params) {
+            return $params;
+        };
     }
 
 }

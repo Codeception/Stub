@@ -288,6 +288,7 @@ class StubTest extends \PHPUnit\Framework\TestCase
             array(1, Stub\Expected::exactly(1, function () {
                 return 'hello world!';
             }), 'hello world!'),
+            array(1, Stub\Expected::exactly(1, 'hello world!'), 'hello world!'),
         );
     }
 
