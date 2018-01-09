@@ -1,7 +1,7 @@
 <?php
 namespace Codeception;
 
-require_once __DIR__ . DIRECTORY_SEPARATOR .'..' . DIRECTORY_SEPARATOR . 'shim.php';
+require_once __DIR__ . DIRECTORY_SEPARATOR . 'shim.php';
 
 use Codeception\Stub\ConsecutiveMap;
 use Codeception\Stub\StubMarshaler;
@@ -51,6 +51,7 @@ class Stub
      *
      * @return object - mock
      * @throws \RuntimeException when class does not exist
+     * @throws \Exception
      */
     public static function make($class, $params = [], $testCase = false)
     {
@@ -100,6 +101,7 @@ class Stub
      * @param array $params
      *
      * @return array
+     * @throws \Exception
      */
     public static function factory($class, $num = 1, $params = [])
     {
@@ -148,6 +150,7 @@ class Stub
      * @param bool|\PHPUnit_Framework_TestCase $testCase
      *
      * @return object
+     * @throws \Exception
      */
     public static function makeEmptyExcept($class, $method, $params = [], $testCase = false)
     {
@@ -220,6 +223,7 @@ class Stub
      * @param bool|\PHPUnit_Framework_TestCase $testCase
      *
      * @return object
+     * @throws \Exception
      */
     public static function makeEmpty($class, $params = [], $testCase = false)
     {
@@ -246,6 +250,7 @@ class Stub
      * @param array $params
      *
      * @return mixed
+     * @throws \Exception
      */
     public static function copy($obj, $params = [])
     {
@@ -292,6 +297,7 @@ class Stub
      * @param bool|\PHPUnit_Framework_TestCase $testCase
      *
      * @return object
+     * @throws \Exception
      */
     public static function construct($class, $constructorParams = [], $params = [], $testCase = false)
     {
