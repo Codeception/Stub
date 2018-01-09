@@ -515,9 +515,15 @@ class Stub
         $methodName = $isAbstract ? 'getMockForAbstractClass' : 'getMock';
         $generatorClass = new Generator;
 
-        $mock = call_user_func_array([$generatorClass, $methodName], $args);
-        $testCase->registerMockObject($mock);
-        return $mock;
+        // using PHPUnit 5.4 mocks registration
+        if ($testCase instanceof \PHPUnit\Framework\TestCase
+        ) {
+            $mock = call_user_func_array([$generatorClass, $methodName], $args);
+            $testCase->registerMockObject($mock);
+            return $mock;
+        }
+
+        return call_user_func_array([$generatorClass, $methodName], $args);
     }
 
     private static function extractTestCaseFromArgs(&$args)
