@@ -1,8 +1,10 @@
 <?php
+require_once __DIR__ .'/ResetMocks.php';
 use Codeception\Stub;
 
 class StubTest extends \PHPUnit\Framework\TestCase
 {
+    use ResetMocks;
     /**
      * @var DummyClass
      */
@@ -213,7 +215,7 @@ class StubTest extends \PHPUnit\Framework\TestCase
     {
         return array(
             array(Stub\Expected::atLeastOnce(),
-                'Expected invocation at least once but it never occurred.'
+                'Expected invocation at least once but it never'
             ),
             array(Stub\Expected::once(),
                 'Method was expected to be called 1 times, actually called 0 times.'
@@ -238,7 +240,7 @@ class StubTest extends \PHPUnit\Framework\TestCase
         try {
             $mock->__phpunit_verify();
             $this->fail('Expected exception');
-        } catch (PHPUnit\Framework\ExpectationFailedException $e) {
+        } catch (\Exception $e) {
             $this->assertContains($failMessage, $e->getMessage());
         }
 
@@ -252,21 +254,11 @@ class StubTest extends \PHPUnit\Framework\TestCase
 
         try {
             $mock->call();
-        } catch (PHPUnit\Framework\ExpectationFailedException $e) {
+        } catch (\Exception $e) {
             $this->assertContains('was not expected to be called', $e->getMessage());
         }
 
         $this->resetMockObjects();
-    }
-
-
-    private function resetMockObjects()
-    {
-        $refl = new ReflectionObject($this);
-        $refl = $refl->getParentClass();
-        $prop = $refl->getProperty('mockObjects');
-        $prop->setAccessible(true);
-        $prop->setValue($this, array());
     }
 
     public static function matcherProvider()

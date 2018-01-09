@@ -70,15 +70,13 @@ Even protected and private properties can be set.
 <?php
 Stub::makeEmptyExcept('User', 'save');
 Stub::makeEmptyExcept('User', 'save', ['name' => 'davert']);
-?>
 ```
 
 Accepts either name of class or object of that class
 
 ``` php
 <?php
-* Stub::makeEmptyExcept(new User, 'save');
-?>
+Stub::makeEmptyExcept(new User, 'save');
 ```
 
 To replace method provide it's name as a key in second parameter

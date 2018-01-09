@@ -1,7 +1,9 @@
 <?php
+require_once __DIR__ .'/ResetMocks.php';
 
 class StubTraitTest extends \PHPUnit\Framework\TestCase
 {
+    use ResetMocks;
     use \Codeception\Test\Feature\Stub;
     /**
      * @var DummyClass
@@ -59,20 +61,10 @@ class StubTraitTest extends \PHPUnit\Framework\TestCase
         try {
             $this->dummy->helloWorld();
         } catch (Exception $e) {
-            $this->assertInstanceOf(PHPUnit\Framework\ExpectationFailedException::class, $e);
             $this->assertContains('was not expected to be called more than once', $e->getMessage());
             $this->resetMockObjects();
             return;
         }
         $this->fail('No exception thrown');
-    }
-
-    private function resetMockObjects()
-    {
-        $refl = new ReflectionObject($this);
-        $refl = $refl->getParentClass();
-        $prop = $refl->getProperty('mockObjects');
-        $prop->setAccessible(true);
-        $prop->setValue($this, array());
     }
 }

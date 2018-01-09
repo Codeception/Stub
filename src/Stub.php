@@ -516,13 +516,16 @@ class Stub
         $generatorClass = new Generator;
 
         // using PHPUnit 5.4 mocks registration
-        if ($testCase instanceof \PHPUnit\Framework\TestCase
+        if (version_compare(\PHPUnit_Runner_Version::series(), '5.4', '>=')
+            && $testCase instanceof \PHPUnit_Framework_TestCase
         ) {
             $mock = call_user_func_array([$generatorClass, $methodName], $args);
             $testCase->registerMockObject($mock);
             return $mock;
         }
-
+        if ($testCase instanceof  \PHPUnit_Framework_TestCase) {
+            $generatorClass = $testCase;
+        }
         return call_user_func_array([$generatorClass, $methodName], $args);
     }
 

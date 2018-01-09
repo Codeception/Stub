@@ -27,14 +27,9 @@ if (!class_exists('PHPUnit\Framework\MockObject\Generator')) {
     class_alias('PHPUnit_Framework_MockObject_Matcher_InvokedRecorder', 'PHPUnit\Framework\MockObject\Matcher\InvokedRecorder');
     class_alias('PHPUnit_Framework_MockObject_Matcher_MethodName', 'PHPUnit\Framework\MockObject\Matcher\MethodName');
     class_alias('PHPUnit_Framework_MockObject_Matcher_Parameters', 'PHPUnit\Framework\MockObject\Matcher\Parameters');
-    class_alias('PHPUnit_Framework_MockObject_Matcher_StatelessInvocation', 'PHPUnit\Framework\MockObject\Matcher\StatelessInvocation');
     class_alias('PHPUnit_Framework_MockObject_Stub_ConsecutiveCalls', 'PHPUnit\Framework\MockObject\Stub\ConsecutiveCalls');
     class_alias('PHPUnit_Framework_MockObject_Stub_Exception', 'PHPUnit\Framework\MockObject\Stub\Exception');
-    class_alias('PHPUnit_Framework_MockObject_Stub_MatcherCollection', 'PHPUnit\Framework\MockObject\Stub\MatcherCollection');
     class_alias('PHPUnit_Framework_MockObject_Stub_ReturnArgument', 'PHPUnit\Framework\MockObject\Stub\ReturnArgument');
     class_alias('PHPUnit_Framework_MockObject_Stub_ReturnCallback', 'PHPUnit\Framework\MockObject\Stub\ReturnCallback');
-    class_alias('PHPUnit_Framework_MockObject_Stub_ReturnReference', 'PHPUnit\Framework\MockObject\Stub\ReturnReference');
-    class_alias('PHPUnit_Framework_MockObject_Stub_ReturnSelf', 'PHPUnit\Framework\MockObject\Stub\ReturnSelf');
     class_alias('PHPUnit_Framework_MockObject_Stub_Return', 'PHPUnit\Framework\MockObject\Stub\ReturnStub');
-    class_alias('PHPUnit_Framework_MockObject_Stub_ReturnValueMap', 'PHPUnit\Framework\MockObject\Stub\ReturnValueMap');
 }
