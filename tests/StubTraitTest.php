@@ -19,15 +19,15 @@ class StubTraitTest extends \PHPUnit\Framework\TestCase
 
     public function testMakeStubs()
     {
-        $this->dummy = $this->make(DummyClass::class, ['helloWorld' => 'bye']);
+        $this->dummy = $this->make('DummyClass', ['helloWorld' => 'bye']);
         $this->assertEquals('bye', $this->dummy->helloWorld());
         $this->assertEquals('good bye', $this->dummy->goodByeWorld());
 
-        $this->dummy = $this->makeEmpty(DummyClass::class, ['helloWorld' => 'bye']);
+        $this->dummy = $this->makeEmpty('DummyClass', ['helloWorld' => 'bye']);
         $this->assertEquals('bye', $this->dummy->helloWorld());
         $this->assertNull($this->dummy->goodByeWorld());
 
-        $this->dummy = $this->makeEmptyExcept(DummyClass::class, 'goodByeWorld', ['helloWorld' => 'bye']);
+        $this->dummy = $this->makeEmptyExcept('DummyClass', 'goodByeWorld', ['helloWorld' => 'bye']);
         $this->assertEquals('bye', $this->dummy->helloWorld());
         $this->assertEquals('good bye', $this->dummy->goodByeWorld());
         $this->assertNull($this->dummy->exceptionalMethod());
@@ -35,17 +35,17 @@ class StubTraitTest extends \PHPUnit\Framework\TestCase
 
     public function testConstructStubs()
     {
-        $this->dummy = $this->construct(DummyClass::class, ['!'], ['helloWorld' => 'bye']);
+        $this->dummy = $this->construct('DummyClass', ['!'], ['helloWorld' => 'bye']);
         $this->assertEquals('constructed: !', $this->dummy->getCheckMe());
         $this->assertEquals('bye', $this->dummy->helloWorld());
         $this->assertEquals('good bye', $this->dummy->goodByeWorld());
 
-        $this->dummy = $this->constructEmpty(DummyClass::class, ['!'], ['helloWorld' => 'bye']);
+        $this->dummy = $this->constructEmpty('DummyClass', ['!'], ['helloWorld' => 'bye']);
         $this->assertNull($this->dummy->getCheckMe());
         $this->assertEquals('bye', $this->dummy->helloWorld());
         $this->assertNull($this->dummy->goodByeWorld());
 
-        $this->dummy = $this->constructEmptyExcept(DummyClass::class, 'getCheckMe', ['!'], ['helloWorld' => 'bye']);
+        $this->dummy = $this->constructEmptyExcept('DummyClass', 'getCheckMe', ['!'], ['helloWorld' => 'bye']);
         $this->assertEquals('constructed: !', $this->dummy->getCheckMe());
         $this->assertEquals('bye', $this->dummy->helloWorld());
         $this->assertNull($this->dummy->goodByeWorld());
@@ -54,7 +54,7 @@ class StubTraitTest extends \PHPUnit\Framework\TestCase
 
     public function testMakeMocks()
     {
-        $this->dummy = $this->make(DummyClass::class, [
+        $this->dummy = $this->make('DummyClass', [
             'helloWorld' => \Codeception\Stub\Expected::once()
         ]);
         $this->dummy->helloWorld();
