@@ -356,7 +356,6 @@ class Stub
      * <?php
      * Stub::constructEmpty('User', ['autosave' => false]);
      * Stub::constructEmpty('User', ['autosave' => false), ['name' => 'davert']);
-     * ?>
      * ```
      *
      * Accepts either name of class or object of that class
@@ -364,7 +363,6 @@ class Stub
      * ``` php
      * <?php
      * Stub::constructEmpty(new User, ['autosave' => false], ['name' => 'davert']);
-     * ?>
      * ```
      *
      * To replace method provide it's name as a key in third parameter
@@ -374,7 +372,6 @@ class Stub
      * <?php
      * Stub::constructEmpty('User', array(), array('save' => function () { return true; }));
      * Stub::constructEmpty('User', array(), array('save' => true));
-     * ?>
      * ```
      *
      * **To create a mock, pass current testcase name as last argument:**
@@ -518,20 +515,9 @@ class Stub
         $methodName = $isAbstract ? 'getMockForAbstractClass' : 'getMock';
         $generatorClass = new Generator;
 
-        // using PHPUnit 5.4 mocks registration
-        if (version_compare(\PHPUnit\Runner\Version::series(), '5.4', '>=')
-            && $testCase instanceof \PHPUnit\Framework\TestCase
-        ) {
-            $mock = call_user_func_array([$generatorClass, $methodName], $args);
-            $testCase->registerMockObject($mock);
-            return $mock;
-        }
-
-        if ($testCase instanceof \PHPUnit\Framework\TestCase) {
-            $generatorClass = $testCase;
-        }
-
-        return call_user_func_array([$generatorClass, $methodName], $args);
+        $mock = call_user_func_array([$generatorClass, $methodName], $args);
+        $testCase->registerMockObject($mock);
+        return $mock;
     }
 
     private static function extractTestCaseFromArgs(&$args)

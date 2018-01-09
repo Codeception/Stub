@@ -1,5 +1,7 @@
 <?php
 if (!class_exists('PHPUnit\Framework\MockObject\Generator')) {
+    define('STUB_PHPUNIT_LEGACY' , true);
+
     class_alias('PHPUnit_Framework_MockObject_Generator', 'PHPUnit\Framework\MockObject\Generator');
     class_alias('PHPUnit_Framework_MockObject_InvocationMocker', 'PHPUnit\Framework\MockObject\InvocationMocker');
     class_alias('PHPUnit_Framework_MockObject_Invokable', 'PHPUnit\Framework\MockObject\Invokable');
