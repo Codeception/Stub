@@ -147,7 +147,7 @@ class Stub
      * @param mixed $class
      * @param string $method
      * @param array $params
-     * @param bool|\PHPUnit_Framework_TestCase $testCase
+     * @param bool|\PHPUnit\Framework\TestCase $testCase
      *
      * @return object
      * @throws \Exception
@@ -347,7 +347,7 @@ class Stub
      * @param mixed $class
      * @param array $constructorParams
      * @param array $params
-     * @param bool|\PHPUnit_Framework_TestCase $testCase
+     * @param bool|\PHPUnit\Framework\TestCase $testCase
      *
      * @return object
      */
@@ -404,7 +404,7 @@ class Stub
      * @param string $method
      * @param array $constructorParams
      * @param array $params
-     * @param bool|\PHPUnit_Framework_TestCase $testCase
+     * @param bool|\PHPUnit\Framework\TestCase $testCase
      *
      * @return object
      */
@@ -453,18 +453,8 @@ class Stub
      * methods of the class mocked. Concrete methods to mock can be specified with
      * the last parameter
      *
-     * @param  string $originalClassName
-     * @param  array $arguments
-     * @param  string $mockClassName
-     * @param  boolean $callOriginalConstructor
-     * @param  boolean $callOriginalClone
-     * @param  boolean $callAutoload
-     * @param  array $mockedMethods
-     * @param  boolean $cloneArguments
-     *
      * @return object
      * @since  Method available since Release 1.0.0
-     * @throws \InvalidArgumentException
      */
     private static function generateMockForAbstractClass()
     {
@@ -527,7 +517,7 @@ class Stub
     /**
      * @param \PHPUnit_Framework_MockObject_MockObject $mock
      * @param array $params
-     * @throws \Exception
+     * @throws \LogicException
      */
     protected static function bindParameters($mock, $params)
     {
@@ -575,7 +565,7 @@ class Stub
                     try {
                         $mock->{$param} = $value;
                     } catch (\Exception $e) {
-                        throw new \Exception(
+                        throw new \LogicException(
                             sprintf(
                                 'Could not add property %1$s, class %2$s implements __set method, '
                                 . 'and no %1$s property exists',
