@@ -1,12 +1,14 @@
 # Codeception\Stub
 
+[![Build Status](https://travis-ci.org/Codeception/Stub.svg?branch=master)](https://travis-ci.org/Codeception/Stub)
+
 Library on top of PHPUnit's mock builder providing a highly simplified syntax:
 
 ## Reference
 
-* [Stub](https://github.com/Codeception/Stub/blob/master/docs/Stub.md)
-* [Expected](https://github.com/Codeception/Stub/blob/master/docs/Expected.md)
-* [Stub Trait](https://github.com/Codeception/Stub/blob/master/docs/StubTrait.md)
+* [Stub](https://github.com/Codeception/Stub/blob/master/docs/Stub.md) - creating stub classes using static methods
+* [Stub Trait](https://github.com/Codeception/Stub/blob/master/docs/StubTrait.md) - creating stubs and mocks using trait
+* [Expected](https://github.com/Codeception/Stub/blob/master/docs/Expected.md) - defining expectations for mocks
 
 ## Install
 
