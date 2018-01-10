@@ -2,6 +2,12 @@
 
 Library on top of PHPUnit's mock builder providing a highly simplified syntax:
 
+## Reference
+
+* [Stub](https://github.com/Codeception/Stub/blob/master/docs/Stub.md)
+* [Expected](https://github.com/Codeception/Stub/blob/master/docs/Expected.md)
+* [Stub Trait](https://github.com/Codeception/Stub/blob/master/docs/StubTrait.md)
+
 ## Install
 
 Enabled by default in Codeception.
@@ -41,7 +47,9 @@ $user->setName('jane'); // => this method is empty
 $user->getName(); // => davert 
 ```
 
-Alternatively, stubs can be created by using `Codeception\Test\Feature\Stub` trait:
+[See complete reference](https://github.com/Codeception/Stub/blob/master/docs/Stub.md)
+
+Alternatively, stubs can be created by using [`Codeception\Test\Feature\Stub` trait](https://github.com/Codeception/Stub/blob/master/docs/StubTrait.md):
 
 ```php
 <?php
@@ -54,7 +62,8 @@ $this->constructEmpty(UserRepositry::class);
 
 ## Mocks
 
-Mocks should be created by including `Codeception\Test\Feature\Stub` trait into a test case:
+Mocks should be created by including [`Codeception\Test\Feature\Stub` trait](https://github.com/Codeception/Stub/blob/master/docs/StubTrait.md) into a test case.
+Execution expectation are set with [`Codescption\Stub\Expected`](https://github.com/Codeception/Stub/blob/master/docs/Expected.md):
 
 ```php
 <?php
@@ -68,6 +77,7 @@ $userRepository = $this->make(UserRepository::class, [
     'find' => Codeception\Stub\Expected::once(new User)
 ]);
 ```
+
 
 ## License 
 
