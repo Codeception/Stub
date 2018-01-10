@@ -3,6 +3,12 @@
 namespace Codeception\Test\Feature;
 
 /**
+ * ### Usage in Codeception
+ *
+ * Since Codeception 2.3.8 this trait is enabled in `\Codeception\Test\Unit` class.
+ *
+ * ### Usage in PHPUnit
+ *
  * Include this trait into a TestCase to be able to use Stubs and Mocks:
  *
  * ```php

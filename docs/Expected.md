@@ -31,7 +31,7 @@ time.
 If the number is less or greater it will later be checked in verify() and also throw an
 exception.
 
-``` php
+```php
 <?php
 use \Codeception\Stub\Expected;
 
@@ -50,7 +50,7 @@ Alternatively, a function can be passed as parameter:
 
 ```php
 <?php
-Expected::once(function() { return Faker::name() });
+Expected::once(function() { return Faker::name(); });
 ```
 
  * `param mixed` $params
@@ -63,7 +63,7 @@ time.
 
 If the number of invocations is 0 it will throw an exception in verify.
 
-``` php
+```php
 <?php
 use \Codeception\Stub\Expected;
 
@@ -84,7 +84,7 @@ Alternatively, a function can be passed as parameter:
 
 ```php
 <?php
-Expected::atLeastOnce(function() { return Faker::name() });
+Expected::atLeastOnce(function() { return Faker::name(); });
 ```
 
  * `param mixed` $params
