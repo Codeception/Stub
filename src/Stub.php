@@ -370,8 +370,8 @@ class Stub
      *
      * ``` php
      * <?php
-     * Stub::constructEmpty('User', array(), array('save' => function () { return true; }));
-     * Stub::constructEmpty('User', array(), array('save' => true));
+     * Stub::constructEmpty('User', [], ['save' => function () { return true; }]);
+     * Stub::constructEmpty('User', [], ['save' => true]);
      * ```
      *
      * **To create a mock, pass current testcase name as last argument:**
@@ -516,14 +516,14 @@ class Stub
         $generatorClass = new Generator;
 
         // using PHPUnit 5.4 mocks registration
-        if (version_compare(\PHPUnit_Runner_Version::series(), '5.4', '>=')
-            && $testCase instanceof \PHPUnit_Framework_TestCase
+        if (version_compare(\PHPUnit\Runner\Version::series(), '5.4', '>=')
+            && $testCase instanceof \PHPUnit\Framework\TestCase
         ) {
             $mock = call_user_func_array([$generatorClass, $methodName], $args);
             $testCase->registerMockObject($mock);
             return $mock;
         }
-        if ($testCase instanceof  \PHPUnit_Framework_TestCase) {
+        if ($testCase instanceof  \PHPUnit\Framework\TestCase) {
             $generatorClass = $testCase;
         }
         return call_user_func_array([$generatorClass, $methodName], $args);
@@ -542,7 +542,7 @@ class Stub
     /**
      * Replaces properties of current stub
      *
-     * @param \PHPUnit_Framework_MockObject_MockObject $mock
+     * @param \PHPUnit\Framework\MockObject\MockObject $mock
      * @param array $params
      *
      * @return mixed
@@ -551,7 +551,7 @@ class Stub
     public static function update($mock, array $params)
     {
         //do not rely on __mocked property, check typ eof $mock
-        if (!$mock instanceof \PHPUnit_Framework_MockObject_MockObject) {
+        if (!$mock instanceof \PHPUnit\Framework\MockObject\MockObject) {
             throw new \LogicException('You can update only stubbed objects');
         }
 
@@ -561,14 +561,14 @@ class Stub
     }
 
     /**
-     * @param \PHPUnit_Framework_MockObject_MockObject $mock
+     * @param \PHPUnit\Framework\MockObject\MockObject $mock
      * @param array $params
      * @throws \LogicException
      */
     protected static function bindParameters($mock, $params)
     {
         $reflectionClass = new \ReflectionClass($mock);
-        if ($mock instanceof \PHPUnit_Framework_MockObject_MockObject) {
+        if ($mock instanceof \PHPUnit\Framework\MockObject\MockObject) {
             $parentClass = $reflectionClass->getParentClass();
             if ($parentClass !== false) {
                 $reflectionClass = $reflectionClass->getParentClass();
