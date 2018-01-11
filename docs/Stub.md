@@ -233,8 +233,8 @@ and it's return value or callback function as parameter
 
 ``` php
 <?php
-Stub::constructEmpty('User', array(), array('save' => function () { return true; }));
-Stub::constructEmpty('User', array(), array('save' => true));
+Stub::constructEmpty('User', [], ['save' => function () { return true; }]);
+Stub::constructEmpty('User', [], ['save' => true]);
 ```
 
 **To create a mock, pass current testcase name as last argument:**
@@ -304,7 +304,7 @@ Stub::constructEmptyExcept('User', 'save', [], [
 #### *public static* update($mock, array $params) 
 Replaces properties of current stub
 
- * `param \PHPUnit_Framework_MockObject_MockObject` $mock
+ * `param \PHPUnit\Framework\MockObject\MockObject` $mock
  * `param array` $params
 
  * return mixed

@@ -46,16 +46,6 @@ and it's return value or callback function as parameter
 <?php
 $this->make('User', ['save' => function () { return true; }]);
 $this->make('User', ['save' => true]);
-?>
-```
-
-**To create a mock, pass current testcase name as last argument:**
-
-```php
-<?php
-$this->make('User', [
-     'save' => \Codeception\Stub\Expected::once()
-]);
 ```
 
  * `param mixed` $class - A class to be mocked
@@ -93,15 +83,6 @@ $this->makeEmpty('User', ['save' => function () { return true; }]);
 $this->makeEmpty('User', ['save' => true));
 ```
 
-**To create a mock, pass current testcase name as last argument:**
-
-```php
-<?php
-$this->makeEmpty('User', [
-     'save' => \Codeception\Stub\Expected::once()
-]);
-```
-
  * `param mixed` $class
  * `param array` $params
  * `param bool|\PHPUnit\Framework\TestCase` $testCase
@@ -137,16 +118,6 @@ and it's return value or callback function as parameter
 <?php
 $this->makeEmptyExcept('User', 'save', ['isValid' => function () { return true; }]);
 $this->makeEmptyExcept('User', 'save', ['isValid' => true]);
-?>
-```
-
-**To create a mock, pass current testcase name as last argument:**
-
-```php
-<?php
-$this->makeEmptyExcept('User', 'validate', [
-     'save' => \Codeception\Stub\Expected::once()
-]);
 ```
 
  * `param mixed` $class
@@ -185,15 +156,6 @@ and it's return value or callback function as parameter
 $this->construct('User', [], ['save' => function () { return true; }]);
 $this->construct('User', [], ['save' => true]);
 ?>
-```
-
-**To create a mock, pass current testcase name as last argument:**
-
-```php
-<?php
-$this->construct('User', [], [
-     'save' => \Codeception\Stub\Expected::once()
-]);
 ```
 
  * `param mixed` $class
@@ -276,15 +238,6 @@ and it's return value or callback function as parameter
 $this->constructEmptyExcept('User', 'save', [], ['save' => function () { return true; }]);
 $this->constructEmptyExcept('User', 'save', [], ['save' => true]);
 ?>
-```
-
-**To create a mock, pass current testcase name as last argument:**
-
-```php
-<?php
-$this->constructEmptyExcept('User', 'save', [], [
-     'save' => \Codeception\Stub\Expected::once()
-]);
 ```
 
  * `param mixed` $class
