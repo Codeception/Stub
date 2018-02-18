@@ -9,9 +9,10 @@
             "Codeception\\": "src/"
         }
     },
+    "require": {
         "phpunit/phpunit-mock-objects": ">2.3 <7.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^4.8|^5.0|^6.0|^7.0"
+        "phpunit/phpunit": ">=4.8 <8.0"
     }
 }
