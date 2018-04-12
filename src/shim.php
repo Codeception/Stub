@@ -6,7 +6,7 @@ if (!class_exists('PHPUnit\Framework\TestCase') && class_exists('PHPUnit_Framewo
 if (!class_exists('PHPUnit\Runner\Version')) {
     class_alias('PHPUnit_Runner_Version', 'PHPUnit\Runner\Version');
 }
-if (!class_exists('PHPUnit\Framework\MockObject\Generator')) {
+if (class_exists('PHPUnit_Framework_MockObject_Generator')) {
     class_alias('PHPUnit_Framework_MockObject_Generator', 'PHPUnit\Framework\MockObject\Generator');
     class_alias('PHPUnit_Framework_MockObject_InvocationMocker', 'PHPUnit\Framework\MockObject\InvocationMocker');
     class_alias('PHPUnit_Framework_MockObject_Invokable', 'PHPUnit\Framework\MockObject\Invokable');
