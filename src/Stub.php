@@ -1,8 +1,6 @@
 <?php
 namespace Codeception;
 
-require_once __DIR__ . DIRECTORY_SEPARATOR . 'shim.php';
-
 use Codeception\Stub\ConsecutiveMap;
 use Codeception\Stub\StubMarshaler;
 use PHPUnit\Framework\MockObject\Generator;
