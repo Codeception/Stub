@@ -10,7 +10,7 @@ class StubTest extends \PHPUnit\Framework\TestCase
      */
     protected $dummy;
 
-    public function setUp()
+    public function setUp(): void
     {
         require_once $file = __DIR__. '/_data/DummyOverloadableClass.php';
         require_once $file = __DIR__. '/_data/DummyClass.php';
@@ -241,7 +241,7 @@ class StubTest extends \PHPUnit\Framework\TestCase
             $mock->__phpunit_verify();
             $this->fail('Expected exception');
         } catch (\Exception $e) {
-            $this->assertContains($failMessage, $e->getMessage());
+            $this->assertStringContainsString($failMessage, $e->getMessage());
         }
 
         $this->resetMockObjects();
@@ -255,7 +255,7 @@ class StubTest extends \PHPUnit\Framework\TestCase
         try {
             $mock->call();
         } catch (\Exception $e) {
-            $this->assertContains('was not expected to be called', $e->getMessage());
+            $this->assertStringContainsString('was not expected to be called', $e->getMessage());
         }
 
         $this->resetMockObjects();

@@ -10,7 +10,7 @@ class StubTraitTest extends \PHPUnit\Framework\TestCase
      */
     protected $dummy;
 
-    public function setUp()
+    public function setUp(): void
     {
         require_once $file = __DIR__. '/_data/DummyOverloadableClass.php';
         require_once $file = __DIR__. '/_data/DummyClass.php';
@@ -61,7 +61,7 @@ class StubTraitTest extends \PHPUnit\Framework\TestCase
         try {
             $this->dummy->helloWorld();
         } catch (Exception $e) {
-            $this->assertContains('was not expected to be called more than once', $e->getMessage());
+            $this->assertStringContainsString('was not expected to be called more than once', $e->getMessage());
             $this->resetMockObjects();
             return;
         }
