@@ -2,7 +2,7 @@
 require_once __DIR__ .'/ResetMocks.php';
 use Codeception\Stub;
 
-class StubTest extends \PHPUnit\Framework\TestCase
+class StubTest extends \Codeception\PHPUnit\TestCase
 {
     use ResetMocks;
     /**
@@ -10,7 +10,7 @@ class StubTest extends \PHPUnit\Framework\TestCase
      */
     protected $dummy;
 
-    public function setUp()
+    public function _setUp()
     {
         require_once $file = __DIR__. '/_data/DummyOverloadableClass.php';
         require_once $file = __DIR__. '/_data/DummyClass.php';
@@ -241,7 +241,8 @@ class StubTest extends \PHPUnit\Framework\TestCase
             $mock->__phpunit_verify();
             $this->fail('Expected exception');
         } catch (\Exception $e) {
-            $this->assertContains($failMessage, $e->getMessage());
+            $this->assertTrue(strpos($failMessage, $e->getMessage()) >= 0, 'String contains');
+
         }
 
         $this->resetMockObjects();
@@ -255,7 +256,7 @@ class StubTest extends \PHPUnit\Framework\TestCase
         try {
             $mock->call();
         } catch (\Exception $e) {
-            $this->assertContains('was not expected to be called', $e->getMessage());
+            $this->assertTrue(strpos('was not expected to be called', $e->getMessage()) >= 0, 'String contains');
         }
 
         $this->resetMockObjects();
