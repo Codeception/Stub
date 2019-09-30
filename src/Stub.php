@@ -4,7 +4,7 @@ namespace Codeception;
 use Codeception\Stub\ConsecutiveMap;
 use Codeception\Stub\StubMarshaler;
 use PHPUnit\Framework\MockObject\Generator;
-use PHPUnit\Framework\MockObject\Matcher\AnyInvokedCount;
+use PHPUnit\Framework\MockObject\Rule\AnyInvokedCount;
 use PHPUnit\Framework\MockObject\Stub\ConsecutiveCalls;
 use PHPUnit\Framework\MockObject\Stub\ReturnCallback;
 use PHPUnit\Framework\MockObject\Stub\ReturnStub;
