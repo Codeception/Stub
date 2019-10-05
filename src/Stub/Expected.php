@@ -2,8 +2,8 @@
 
 namespace Codeception\Stub;
 
-use PHPUnit\Framework\MockObject\Matcher\InvokedAtLeastOnce;
-use PHPUnit\Framework\MockObject\Matcher\InvokedCount;
+use PHPUnit\Framework\MockObject\Rule\InvokedAtLeastOnce;
+use PHPUnit\Framework\MockObject\Rule\InvokedCount;
 
 class Expected
 {
