@@ -10,7 +10,6 @@
         }
     },
     "require": {
-        "codeception/phpunit-wrapper": "^8.0.4",
         "phpunit/phpunit": "^8.4"
     }
 }
