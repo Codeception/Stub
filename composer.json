@@ -10,6 +10,6 @@
         }
     },
     "require": {
-        "phpunit/phpunit": "^8.4"
+        "phpunit/phpunit": "^8.4 | ^9.0"
     }
 }
