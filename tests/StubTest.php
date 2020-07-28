@@ -374,6 +374,55 @@ class StubTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($dummy->helloWorld());
     }
 
+    public static function argumentsMatchProvider()
+    {
+        return array(
+            array(Stub\Expected::once()->with(), []),
+            array(Stub\Expected::once()->with('it is me'), ['it is me']),
+            array(Stub\Expected::once()->with(new PHPUnit\Framework\Constraint\IsAnything), ['it is me']),
+            array(Stub\Expected::once()->with('it is me', 'and you'), ['it is me', 'and you']),
+        );
+    }
+
+    /**
+     * @dataProvider argumentsMatchProvider
+     */
+    public function testWithArgumentsMatch($matcher, $arguments)
+    {
+        $dummy = Stub::make('DummyClass', array('helloWorld' => $matcher));
+
+        $this->assertNull($dummy->helloWorld(...$arguments));
+    }
+
+    public static function argumentsMismatchProvider()
+    {
+        return array(
+            array(Stub\Expected::once()->with('it is me'), [], 'Parameter count for invocation DummyClass::helloWorld() is too low.'),
+            array(Stub\Expected::once()->with('it is me'), ['it is you'], 'Parameter 0 for invocation DummyClass::helloWorld(\'it is you\') does not match expected value.'),
+            array(Stub\Expected::once()->with('it is me', 'and you'), ['it is me'], 'Parameter count for invocation DummyClass::helloWorld(\'it is me\') is too low.'),
+        );
+    }
+
+    /**
+     * @dataProvider argumentsMismatchProvider
+     */
+    public function testWithArgumentsMismatch($matcher, $arguments, $failMessage)
+    {
+        $dummy = Stub::make('DummyClass', array('helloWorld' => $matcher));
+
+        try {
+            $dummy->helloWorld(...$arguments);
+            $this->fail('Expected exception');
+        } catch (\Exception $e) {
+            if ($e->getMessage() === 'Expected exception') {
+                $this->fail('Expected exception');
+            }
+            $this->assertStringContainsString($failMessage, $e->getMessage());
+        }
+
+        $this->resetMockObjects();
+    }
+
     public function testStubPrivateProperties()
     {
         $tester = Stub::construct(

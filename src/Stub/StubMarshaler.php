@@ -13,6 +13,8 @@ class StubMarshaler
 
     private $methodValue;
 
+    private $methodArguments = null;
+
     public function __construct(InvocationOrder $matcher, $value)
     {
         $this->methodMatcher = $matcher;
@@ -27,5 +29,17 @@ class StubMarshaler
     public function getValue()
     {
         return $this->methodValue;
+    }
+
+    public function getArguments()
+    {
+        return $this->methodArguments;
+    }
+
+    public function with(...$arguments)
+    {
+        $this->methodArguments = $arguments;
+
+        return $this;
     }
 }
