@@ -178,7 +178,7 @@ Accepts either name of class or object of that class
 
 ``` php
 <?php
-Stub::construct(new User, ['autosave' => false), ['name' => 'davert']);
+Stub::construct(new User, ['autosave' => false], ['name' => 'davert']);
 ?>
 ```
 
