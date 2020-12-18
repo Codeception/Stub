@@ -1,6 +1,6 @@
 # Codeception\Stub
 
-[![Build Status](https://travis-ci.org/Codeception/Stub.svg?branch=master)](https://travis-ci.org/Codeception/Stub)
+![CI](https://github.com/Codeception/Stub/workflows/CI/badge.svg)
 [![Latest Stable Version](https://poser.pugx.org/codeception/stub/v/stable)](https://packagist.org/packages/codeception/stub)
 [![Total Downloads](https://poser.pugx.org/codeception/stub/downloads)](https://packagist.org/packages/codeception/stub)
 [![License](https://poser.pugx.org/codeception/stub/license)](https://packagist.org/packages/codeception/stub)
