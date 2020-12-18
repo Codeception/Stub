@@ -42,11 +42,12 @@ Stub::make('User', [
 ], $this);
 ```
 
- * `param mixed` $class - A class to be mocked
+ * template RealInstanceType of object
+ * `param class-string<RealInstanceType>|RealInstanceType|callable(): class-string<RealInstanceType>` $class - A class to be mocked
  * `param array` $params - properties and methods to set
  * `param bool|\PHPUnit\Framework\TestCase` $testCase
 
- * return object - mock
+ * return \PHPUnit\Framework\MockObject\MockObject&RealInstanceType - mock
  * throws \RuntimeException when class does not exist
  * throws \Exception
 
@@ -99,13 +100,13 @@ Stub::makeEmptyExcept('User', 'validate', [
      'save' => \Codeception\Stub\Expected::once()
 ], $this);
 ```
-
- * `param mixed` $class
+ * template
+ * `param class-string<RealInstanceType>|RealInstanceType|callable(): class-string<RealInstanceType>` $class - A class to be mocked
  * `param string` $method
  * `param array` $params
  * `param bool|\PHPUnit\Framework\TestCase` $testCase
 
- * return object
+ * return \PHPUnit\Framework\MockObject\MockObject&RealInstanceType
  * throws \Exception
 
 #### *public static* makeEmpty($class, $params = null, $testCase = null) 
@@ -133,7 +134,7 @@ and it's return value or callback function as parameter
 ``` php
 <?php
 Stub::makeEmpty('User', ['save' => function () { return true; }]);
-Stub::makeEmpty('User', ['save' => true));
+Stub::makeEmpty('User', ['save' => true]);
 ```
 
 **To create a mock, pass current testcase name as last argument:**
@@ -145,11 +146,12 @@ Stub::makeEmpty('User', [
 ], $this);
 ```
 
- * `param mixed` $class
+ * template RealInstanceType of object
+ * `param class-string<RealInstanceType>|RealInstanceType|callable(): class-string<RealInstanceType>` $class - A class to be mocked
  * `param array` $params
  * `param bool|\PHPUnit\Framework\TestCase` $testCase
 
- * return object
+ * return \PHPUnit\Framework\MockObject\MockObject&RealInstanceType
  * throws \Exception
 
 #### *public static* copy($obj, $params = null) 
@@ -178,7 +180,7 @@ Accepts either name of class or object of that class
 
 ``` php
 <?php
-Stub::construct(new User, ['autosave' => false), ['name' => 'davert']);
+Stub::construct(new User, ['autosave' => false], ['name' => 'davert']);
 ?>
 ```
 
@@ -201,12 +203,13 @@ Stub::construct('User', [], [
 ], $this);
 ```
 
- * `param mixed` $class
+ * template RealInstanceType of object
+ * `param class-string<RealInstanceType>|RealInstanceType|callable(): class-string<RealInstanceType>` $class - A class to be mocked
  * `param array` $constructorParams
  * `param array` $params
  * `param bool|\PHPUnit\Framework\TestCase` $testCase
 
- * return object
+ * return \PHPUnit\Framework\MockObject\MockObject&RealInstanceType
  * throws \Exception
 
 #### *public static* constructEmpty($class, $constructorParams = null, $params = null, $testCase = null) 
@@ -218,7 +221,7 @@ Even protected and private properties can be set.
 ``` php
 <?php
 Stub::constructEmpty('User', ['autosave' => false]);
-Stub::constructEmpty('User', ['autosave' => false), ['name' => 'davert']);
+Stub::constructEmpty('User', ['autosave' => false], ['name' => 'davert']);
 ```
 
 Accepts either name of class or object of that class
@@ -246,12 +249,13 @@ Stub::constructEmpty('User', [], [
 ], $this);
 ```
 
- * `param mixed` $class
+ * template RealInstanceType of object
+ * `param class-string<RealInstanceType>|RealInstanceType|callable(): class-string<RealInstanceType>` $class - A class to be mocked
  * `param array` $constructorParams
  * `param array` $params
  * `param bool|\PHPUnit\Framework\TestCase` $testCase
 
- * return object
+ * return \PHPUnit\Framework\MockObject\MockObject&RealInstanceType
 
 #### *public static* constructEmptyExcept($class, $method, $constructorParams = null, $params = null, $testCase = null) 
 Instantiates a class instance by running constructor with all methods replaced with dummies, except one.
@@ -293,13 +297,14 @@ Stub::constructEmptyExcept('User', 'save', [], [
 ], $this);
 ```
 
- * `param mixed` $class
+ * template RealInstanceType of object
+ * `param class-string<RealInstanceType>|RealInstanceType|callable(): class-string<RealInstanceType>` $class - A class to be mocked
  * `param string` $method
  * `param array` $constructorParams
  * `param array` $params
  * `param bool|\PHPUnit\Framework\TestCase` $testCase
 
- * return object
+ * return \PHPUnit\Framework\MockObject\MockObject&RealInstanceType
 
 #### *public static* update($mock, array $params) 
 Replaces properties of current stub
@@ -315,7 +320,7 @@ Stubbing a method call to return a list of values in the specified order.
 
 ``` php
 <?php
-$user = Stub::make('User', array('getName' => Stub::consecutive('david', 'emma', 'sam', 'amy')));
+$user = Stub::make('User', ['getName' => Stub::consecutive('david', 'emma', 'sam', 'amy')]);
 $user->getName(); //david
 $user->getName(); //emma
 $user->getName(); //sam

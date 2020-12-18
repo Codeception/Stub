@@ -47,11 +47,11 @@ and it's return value or callback function as parameter
 $this->make('User', ['save' => function () { return true; }]);
 $this->make('User', ['save' => true]);
 ```
-
- * `param mixed` $class - A class to be mocked
+ * template RealInstanceType of object
+ * `param class-string<RealInstanceType>|RealInstanceType|callable(): class-string<RealInstanceType>` $class - A class to be mocked
  * `param array` $params - properties and methods to set
 
- * return object - mock
+ * return \PHPUnit\Framework\MockObject\MockObject&RealInstanceType - mock
  * throws \RuntimeException when class does not exist
  * throws \Exception
 
@@ -83,11 +83,12 @@ $this->makeEmpty('User', ['save' => function () { return true; }]);
 $this->makeEmpty('User', ['save' => true));
 ```
 
- * `param mixed` $class
+ * template RealInstanceType of object
+ * `param class-string<RealInstanceType>|RealInstanceType|callable(): class-string<RealInstanceType>` $class - A class to be mocked
  * `param array` $params
  * `param bool|\PHPUnit\Framework\TestCase` $testCase
 
- * return object
+ * return \PHPUnit\Framework\MockObject\MockObject&RealInstanceType
  * throws \Exception
 
 #### *public* makeEmptyExcept($class, $method, $params = null) 
@@ -120,11 +121,12 @@ $this->makeEmptyExcept('User', 'save', ['isValid' => function () { return true; 
 $this->makeEmptyExcept('User', 'save', ['isValid' => true]);
 ```
 
- * `param mixed` $class
+ * template RealInstanceType of object
+ * `param class-string<RealInstanceType>|RealInstanceType|callable(): class-string<RealInstanceType>` $class - A class to be mocked
  * `param string` $method
  * `param array` $params
 
- * return object
+ * return \PHPUnit\Framework\MockObject\MockObject&RealInstanceType
  * throws \Exception
 
 #### *public* construct($class, $constructorParams = null, $params = null) 
@@ -158,12 +160,13 @@ $this->construct('User', [], ['save' => true]);
 ?>
 ```
 
- * `param mixed` $class
+ * template RealInstanceType of object
+ * `param class-string<RealInstanceType>|RealInstanceType|callable(): class-string<RealInstanceType>` $class - A class to be mocked
  * `param array` $constructorParams
  * `param array` $params
  * `param bool|\PHPUnit\Framework\TestCase` $testCase
 
- * return object
+ * return \PHPUnit\Framework\MockObject\MockObject&RealInstanceType
  * throws \Exception
 
 #### *public* constructEmpty($class, $constructorParams = null, $params = null) 
@@ -203,11 +206,12 @@ $this->constructEmpty('User', [], [
 ]);
 ```
 
- * `param mixed` $class
+ * template RealInstanceType of object
+ * `param class-string<RealInstanceType>|RealInstanceType|callable(): class-string<RealInstanceType>` $class - A class to be mocked
  * `param array` $constructorParams
  * `param array` $params
 
- * return object
+ * return \PHPUnit\Framework\MockObject\MockObject&RealInstanceType
 
 #### *public* constructEmptyExcept($class, $method, $constructorParams = null, $params = null) 
 Instantiates a class instance by running constructor with all methods replaced with dummies, except one.
@@ -240,11 +244,12 @@ $this->constructEmptyExcept('User', 'save', [], ['save' => true]);
 ?>
 ```
 
- * `param mixed` $class
+ * template RealInstanceType of object
+ * `param class-string<RealInstanceType>|RealInstanceType|callable(): class-string<RealInstanceType>` $class - A class to be mocked
  * `param string` $method
  * `param array` $constructorParams
  * `param array` $params
 
- * return object
+ * return \PHPUnit\Framework\MockObject\MockObject&RealInstanceType
 
 
