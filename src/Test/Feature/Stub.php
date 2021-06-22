@@ -115,7 +115,7 @@ trait Stub
      * ``` php
      * <?php
      * $this->makeEmpty('User', ['save' => function () { return true; }]);
-     * $this->makeEmpty('User', ['save' => true));
+     * $this->makeEmpty('User', ['save' => true]);
      * ```
      *
      * @template RealInstanceType of object
