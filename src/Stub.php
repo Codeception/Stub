@@ -583,10 +583,19 @@ class Stub
             if ($reflectionClass->hasMethod($param)) {
                 if ($value instanceof StubMarshaler) {
                     $marshaler = $value;
-                    $mock
-                        ->expects($marshaler->getMatcher())
-                        ->method($param)
-                        ->will(new ReturnCallback($marshaler->getValue()));
+                    $methodArguments = $marshaler->getArguments();
+                    if ($methodArguments !== null) {
+                        $mock
+                            ->expects($marshaler->getMatcher())
+                            ->method($param)
+                            ->with(...$methodArguments)
+                            ->will(new ReturnCallback($marshaler->getValue()));
+                    } else {
+                        $mock
+                            ->expects($marshaler->getMatcher())
+                            ->method($param)
+                            ->will(new ReturnCallback($marshaler->getValue()));
+                    }
                 } elseif ($value instanceof \Closure) {
                     $mock
                         ->expects(new AnyInvokedCount)
