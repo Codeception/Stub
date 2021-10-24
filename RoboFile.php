@@ -1,11 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
+use Robo\Tasks;
+
 require_once 'vendor/autoload.php';
 /**
  * This is project's console commands configuration for Robo task runner.
  *
- * @see http://robo.li/
+ * @see https://robo.li/
  */
-class RoboFile extends \Robo\Tasks
+class RoboFile extends Tasks
 {
     protected $docs = [
         'docs/Stub.md' => 'Codeception\Stub',
@@ -22,7 +27,7 @@ class RoboFile extends \Robo\Tasks
             $this->say("Here goes, $class");
             $this->taskGenDoc($file)
                 ->docClass($class)
-                ->filterMethods(function(\ReflectionMethod $method) {
+                ->filterMethods(function(ReflectionMethod $method) {
                     if ($method->isConstructor() or $method->isDestructor()) return false;
                     if (!$method->isPublic()) return false;
                     if (strpos($method->name, '_') === 0) return false;
@@ -30,7 +35,7 @@ class RoboFile extends \Robo\Tasks
                     return true;
                 })
                 ->processMethodDocBlock(
-                    function (\ReflectionMethod $m, $doc) {
+                    function (ReflectionMethod $m, $doc) {
                         $doc = str_replace(array('@since'), array(' * available since version'), $doc);
                         $doc = str_replace(array(' @', "\n@"), array("  * ", "\n * "), $doc);
                         return $doc;

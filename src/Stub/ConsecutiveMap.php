@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Codeception\Stub;
 
 /**
@@ -7,12 +9,14 @@ namespace Codeception\Stub;
  */
 class ConsecutiveMap
 {
-    private $consecutiveMap = [];
+    private array $consecutiveMap = [];
+
     public function __construct(array $consecutiveMap)
     {
         $this->consecutiveMap = $consecutiveMap;
     }
-    public function getMap()
+
+    public function getMap(): array
     {
         return $this->consecutiveMap;
     }
