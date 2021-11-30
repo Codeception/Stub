@@ -18,11 +18,9 @@ $user = $this->make('User', [
      'someMethod' => function() {}
 ]);
 $user->someMethod();
-?>
 ```
 
  * `param mixed` $params
- * return StubMarshaler
 
 #### *public static* once($params = null) 
 Checks if a method has been invoked exactly one
@@ -44,7 +42,6 @@ $user = $this->make(
 );
 $userName = $user->getName();
 $this->assertEquals('Davert', $userName);
-?>
 ```
 Alternatively, a function can be passed as parameter:
 
@@ -54,8 +51,6 @@ Expected::once(function() { return Faker::name(); });
 ```
 
  * `param mixed` $params
-
- * return StubMarshaler
 
 #### *public static* atLeastOnce($params = null) 
 Checks if a method has been invoked at least one
@@ -77,7 +72,6 @@ $user = $this->make(
 $user->getName();
 $userName = $user->getName();
 $this->assertEquals('Davert', $userName);
-?>
 ```
 
 Alternatively, a function can be passed as parameter:
@@ -88,8 +82,6 @@ Expected::atLeastOnce(function() { return Faker::name(); });
 ```
 
  * `param mixed` $params
-
- * return StubMarshaler
 
 #### *public static* exactly($count, $params = null) 
 Checks if a method has been invoked a certain amount
@@ -115,7 +107,6 @@ $user->getName();
 $user->getName();
 $userName = $user->getName();
 $this->assertEquals('Davert', $userName);
-?>
 ```
 Alternatively, a function can be passed as parameter:
 
@@ -124,9 +115,6 @@ Alternatively, a function can be passed as parameter:
 Expected::exactly(function() { return Faker::name() });
 ```
 
- * `param int` $count
  * `param mixed` $params
-
- * return StubMarshaler
 
 

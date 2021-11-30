@@ -11,5 +11,8 @@
     },
     "require": {
         "phpunit/phpunit": "^8.4 | ^9.0"
+    },
+    "require-dev": {
+        "consolidation/robo": "^3.0"
     }
 }

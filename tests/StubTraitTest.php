@@ -1,14 +1,19 @@
 <?php
+
+declare(strict_types=1);
+
+use Codeception\Stub\Expected;
+use Codeception\Test\Feature\Stub;
+use PHPUnit\Framework\TestCase;
+
 require_once __DIR__ .'/ResetMocks.php';
 
-class StubTraitTest extends \PHPUnit\Framework\TestCase
+final class StubTraitTest extends TestCase
 {
     use ResetMocks;
-    use \Codeception\Test\Feature\Stub;
-    /**
-     * @var DummyClass
-     */
-    protected $dummy;
+    use Stub;
+
+    protected DummyClass $dummy;
 
     public function setUp(): void
     {
@@ -55,16 +60,20 @@ class StubTraitTest extends \PHPUnit\Framework\TestCase
     public function testMakeMocks()
     {
         $this->dummy = $this->make('DummyClass', [
-            'helloWorld' => \Codeception\Stub\Expected::once()
+            'helloWorld' => Expected::once()
         ]);
         $this->dummy->helloWorld();
         try {
             $this->dummy->helloWorld();
-        } catch (Exception $e) {
-            $this->assertTrue(strpos('was not expected to be called more than once', $e->getMessage()) >= 0, 'String contains');
+        } catch (Exception $exception) {
+            $this->assertTrue(
+                strpos('was not expected to be called more than once', $exception->getMessage()) >= 0,
+                'String contains'
+            );
             $this->resetMockObjects();
             return;
         }
+
         $this->fail('No exception thrown');
     }
 }
