@@ -228,9 +228,7 @@ class Stub
         $methods = get_class_methods($class);
         $methods = array_filter(
             $methods,
-            function ($i) {
-                return !in_array($i, Stub::$magicMethods);
-            }
+            fn($i) => !in_array($i, Stub::$magicMethods)
         );
         $mock = self::generateMock($class, $methods, [], '', false, $testCase);
         self::bindParameters($mock, $params);
@@ -366,9 +364,7 @@ class Stub
         $methods = get_class_methods($class);
         $methods = array_filter(
             $methods,
-            function ($i) {
-                return !in_array($i, Stub::$magicMethods);
-            }
+            fn($i) => !in_array($i, Stub::$magicMethods)
         );
         $mock = self::generateMock($class, $methods, $constructorParams, $testCase);
         self::bindParameters($mock, $params);
@@ -623,22 +619,16 @@ class Stub
 
         $methods = array_filter(
             $methods,
-            function ($m) {
-                return !in_array($m->name, Stub::$magicMethods);
-            }
+            fn($m) => !in_array($m->name, Stub::$magicMethods)
         );
 
         $methods = array_filter(
             $methods,
-            function ($m) use ($method) {
-                return $method != $m->name;
-            }
+            fn($m) => $method != $m->name
         );
 
         $methods = array_map(
-            function ($m) {
-                return $m->name;
-            },
+            fn($m) => $m->name,
             $methods
         );
 
