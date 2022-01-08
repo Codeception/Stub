@@ -158,7 +158,7 @@ class Stub
      *      'save' => \Codeception\Stub\Expected::once()
      * ], $this);
      * ```
-     * @template
+     * @template RealInstanceType of object
      * @param class-string<RealInstanceType>|RealInstanceType|callable(): class-string<RealInstanceType> $class - A class to be mocked
      * @param string $method
      * @param array $params
