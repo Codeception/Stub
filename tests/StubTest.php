@@ -160,42 +160,42 @@ final class StubTest extends TestCase
             $dummy
         );
         $dummy = Stub::make(new DummyOverloadableClass());
-        $this->assertObjectHasAttribute('__mocked', $dummy);
+        $this->assertObjectHasProperty('__mocked', $dummy);
         $dummy = Stub::makeEmpty(new DummyClass());
         $this->assertInstanceOf(
             MockObject::class,
             $dummy
         );
         $dummy = Stub::makeEmpty(new DummyOverloadableClass());
-        $this->assertObjectHasAttribute('__mocked', $dummy);
+        $this->assertObjectHasProperty('__mocked', $dummy);
         $dummy = Stub::makeEmptyExcept(new DummyClass(), 'helloWorld');
         $this->assertInstanceOf(
             MockObject::class,
             $dummy
         );
         $dummy = Stub::makeEmptyExcept(new DummyOverloadableClass(), 'helloWorld');
-        $this->assertObjectHasAttribute('__mocked', $dummy);
+        $this->assertObjectHasProperty('__mocked', $dummy);
         $dummy = Stub::construct(new DummyClass());
         $this->assertInstanceOf(
             MockObject::class,
             $dummy
         );
         $dummy = Stub::construct(new DummyOverloadableClass());
-        $this->assertObjectHasAttribute('__mocked', $dummy);
+        $this->assertObjectHasProperty('__mocked', $dummy);
         $dummy = Stub::constructEmpty(new DummyClass());
         $this->assertInstanceOf(
             MockObject::class,
             $dummy
         );
         $dummy = Stub::constructEmpty(new DummyOverloadableClass());
-        $this->assertObjectHasAttribute('__mocked', $dummy);
+        $this->assertObjectHasProperty('__mocked', $dummy);
         $dummy = Stub::constructEmptyExcept(new DummyClass(), 'helloWorld');
         $this->assertInstanceOf(
             MockObject::class,
             $dummy
         );
         $dummy = Stub::constructEmptyExcept(new DummyOverloadableClass(), 'helloWorld');
-        $this->assertObjectHasAttribute('__mocked', $dummy);
+        $this->assertObjectHasProperty('__mocked', $dummy);
     }
 
     protected function assertMethodReplaced($dummy)
@@ -386,6 +386,12 @@ final class StubTest extends TestCase
     {
         $stub = Stub::makeEmpty(Countable::class, ['count' => 5]);
         $this->assertEquals(5, $stub->count());
+    }
+
+    private function assertObjectHasProperty(string $propertyName, object $object): void
+    {
+        $hasProperty = (new ReflectionObject($object))->hasProperty($propertyName);
+        $this->assertTrue($hasProperty, sprintf("Object has no attribute %s", $propertyName));
     }
 }
 
