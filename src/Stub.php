@@ -92,17 +92,6 @@ class Stub
 
         self::bindParameters($mock, $params);
 
-        return self::markAsMock($mock, $reflection);
-    }
-
-    /**
-     * Set __mock flag, if at all possible
-     */
-    private static function markAsMock(object $mock, ReflectionClass $reflection): object
-    {
-        if (!$reflection->hasMethod('__set')) {
-            $mock->__mocked = $reflection->getName();
-        }
         return $mock;
     }
 
@@ -169,11 +158,11 @@ class Stub
      */
     public static function makeEmptyExcept($class, string $method, array $params = [], $testCase = false)
     {
-        [$class, $reflectionClass, $methods] = self::createEmpty($class, $method);
+        [$class, $methods] = self::createEmpty($class, $method);
         $mock = self::generateMock($class, $methods, [], '', false, $testCase);
         self::bindParameters($mock, $params);
 
-        return self::markAsMock($mock, $reflectionClass);
+        return $mock;
     }
 
     /**
@@ -223,17 +212,14 @@ class Stub
     public static function makeEmpty($class, array $params = [], $testCase = false)
     {
         $class = self::getClassname($class);
-        $reflection = new ReflectionClass($class);
-
-        $methods = get_class_methods($class);
         $methods = array_filter(
-            $methods,
+            get_class_methods($class),
             fn($i) => !in_array($i, Stub::$magicMethods)
         );
         $mock = self::generateMock($class, $methods, [], '', false, $testCase);
         self::bindParameters($mock, $params);
 
-        return self::markAsMock($mock, $reflection);
+        return $mock;
     }
 
     /**
@@ -307,7 +293,7 @@ class Stub
         $mock = self::generateMock($class, $arguments, $constructorParams, $testCase);
         self::bindParameters($mock, $params);
 
-        return self::markAsMock($mock, $reflection);
+        return $mock;
     }
 
     /**
@@ -354,22 +340,18 @@ class Stub
      * @param bool|PHPUnitTestCase $testCase
      *
      * @return PHPUnitMockObject&RealInstanceType
-     * @throws ReflectionException
      */
     public static function constructEmpty($class, array $constructorParams = [], array $params = [], $testCase = false)
     {
         $class = self::getClassname($class);
-        $reflection = new ReflectionClass($class);
-
-        $methods = get_class_methods($class);
         $methods = array_filter(
-            $methods,
+            get_class_methods($class),
             fn($i) => !in_array($i, Stub::$magicMethods)
         );
         $mock = self::generateMock($class, $methods, $constructorParams, $testCase);
         self::bindParameters($mock, $params);
 
-        return self::markAsMock($mock, $reflection);
+        return $mock;
     }
 
     /**
@@ -423,11 +405,11 @@ class Stub
         array $params = [],
         $testCase = false
     ) {
-        [$class, $reflectionClass, $methods] = self::createEmpty($class, $method);
+        [$class, $methods] = self::createEmpty($class, $method);
         $mock = self::generateMock($class, $methods, $constructorParams, $testCase);
         self::bindParameters($mock, $params);
 
-        return self::markAsMock($mock, $reflectionClass);
+        return $mock;
     }
 
     private static function generateMock()
@@ -633,6 +615,6 @@ class Stub
         );
 
         $methods = count($methods) ? $methods : null;
-        return [$class, $reflectionClass, $methods];
+        return [$class, $methods];
     }
 }
