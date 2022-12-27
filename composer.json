@@ -15,5 +15,8 @@
     },
     "require-dev": {
         "consolidation/robo": "^3.0"
+    },
+    "conflict": {
+        "codeception/codeception": "<5.0.6"
     }
 }
