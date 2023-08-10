@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Codeception\Stub;
 
 use PHPUnit\Framework\MockObject\Rule\InvocationOrder;
+use PHPUnit\Framework\MockObject\Stub\Stub;
 
 /**
  * Holds matcher and value of mocked method
@@ -26,6 +27,9 @@ class StubMarshaler
         return $this->methodMatcher;
     }
 
+    /**
+     * @return Stub
+     */
     public function getValue()
     {
         return $this->methodValue;

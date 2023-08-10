@@ -7,6 +7,8 @@ namespace Codeception\Stub;
 use Closure;
 use PHPUnit\Framework\MockObject\Rule\InvokedAtLeastOnce;
 use PHPUnit\Framework\MockObject\Rule\InvokedCount;
+use PHPUnit\Framework\MockObject\Stub\ReturnCallback;
+use PHPUnit\Framework\MockObject\Stub\Stub;
 
 class Expected
 {
@@ -33,7 +35,7 @@ class Expected
     {
         return new StubMarshaler(
             new InvokedCount(0),
-            self::closureIfNull($params)
+            self::stubIfClosure($params)
         );
     }
 
@@ -65,13 +67,20 @@ class Expected
      * Expected::once(function() { return Faker::name(); });
      * ```
      *
+     * PHPUnit Stub can also be passed as parameter:
+     * 
+     * ```php
+     * <?php
+     * Expected::exactly(3, new ReturnSelf());
+     * ```
+     *
      * @param mixed $params
      */
     public static function once($params = null): StubMarshaler
     {
         return new StubMarshaler(
             new InvokedCount(1),
-            self::closureIfNull($params)
+            self::stubIfClosure($params)
         );
     }
 
@@ -103,6 +112,20 @@ class Expected
      * <?php
      * Expected::atLeastOnce(function() { return Faker::name(); });
      * ```
+     * 
+     * ConsecutiveMap can also be passed as parameter:
+     * 
+     * ```php
+     * <?php
+     * Expected::exactly(3, Stub::consecutive(1,2,3));
+     * ```
+     *
+     * PHPUnit Stub can also be passed as parameter:
+     * 
+     * ```php
+     * <?php
+     * Expected::exactly(3, new ReturnSelf());
+     * ```
      *
      * @param mixed $params
      */
@@ -110,7 +133,7 @@ class Expected
     {
         return new StubMarshaler(
             new InvokedAtLeastOnce(),
-            self::closureIfNull($params)
+            self::stubIfClosure($params)
         );
     }
 
@@ -145,6 +168,20 @@ class Expected
      * <?php
      * Expected::exactly(function() { return Faker::name() });
      * ```
+     * 
+     * ConsecutiveMap can also be passed as parameter:
+     * 
+     * ```php
+     * <?php
+     * Expected::exactly(3, Stub::consecutive(1,2,3));
+     * ```
+     *
+     * PHPUnit Stub can also be passed as parameter:
+     * 
+     * ```php
+     * <?php
+     * Expected::exactly(3, new ReturnSelf());
+     * ```
      *
      * @param mixed $params
      */
@@ -152,8 +189,17 @@ class Expected
     {
         return new StubMarshaler(
             new InvokedCount($count),
-            self::closureIfNull($params)
+            self::stubIfClosure($params)
         );
+    }
+
+    private static function stubIfClosure($params) : Stub
+    {
+        if ($params instanceof Stub) {
+            return $params;
+        }
+
+        return new ReturnCallback(self::closureIfNull($params));
     }
 
     private static function closureIfNull($params): Closure

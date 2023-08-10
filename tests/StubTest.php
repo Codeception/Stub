@@ -7,6 +7,8 @@ require_once __DIR__ .'/ResetMocks.php';
 use Codeception\Stub;
 use Codeception\Stub\StubMarshaler;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub\ConsecutiveCalls;
+use PHPUnit\Framework\MockObject\Stub\ReturnCallback;
 use PHPUnit\Framework\TestCase;
 
 final class StubTest extends TestCase
@@ -274,6 +276,9 @@ final class StubTest extends TestCase
             [1, Stub\Expected::exactly(1, fn() => null), null],
             [1, Stub\Expected::exactly(1, fn(): string => 'hello world!'), 'hello world!'],
             [1, Stub\Expected::exactly(1, 'hello world!'), 'hello world!'],
+            [1, Stub\Expected::exactly(1, Stub::consecutive('hello world!')), 'hello world!'],
+            [1, Stub\Expected::exactly(1, Stub::consecutive(new ReturnCallback(fn() => 'hello world!'))), 'hello world!'],
+            [1, Stub\Expected::exactly(1, new ReturnCallback(fn() => 'hello world!')), 'hello world!'],
         ];
     }
 
@@ -356,6 +361,24 @@ final class StubTest extends TestCase
     public function testConsecutive()
     {
         $dummy = Stub::make('DummyClass', ['helloWorld' => Stub::consecutive('david', 'emma', 'sam', 'amy')]);
+
+        $this->assertEquals('david', $dummy->helloWorld());
+        $this->assertEquals('emma', $dummy->helloWorld());
+        $this->assertEquals('sam', $dummy->helloWorld());
+        $this->assertEquals('amy', $dummy->helloWorld());
+
+        // Expected null value when no more values
+        $this->assertNull($dummy->helloWorld());
+    }
+
+    public function testConsecutiveWithAnonymousMethods()
+    {
+        $dummy = Stub::make('DummyClass', ['helloWorld' => new ConsecutiveCalls([
+            new ReturnCallback(fn() => 'david'),
+            new ReturnCallback(fn() => 'emma'),
+            new ReturnCallback(fn() => 'sam'),
+            new ReturnCallback(fn() => 'amy')
+        ])]);
 
         $this->assertEquals('david', $dummy->helloWorld());
         $this->assertEquals('emma', $dummy->helloWorld());
