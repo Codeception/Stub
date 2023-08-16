@@ -387,12 +387,6 @@ final class StubTest extends TestCase
         $stub = Stub::makeEmpty(Countable::class, ['count' => 5]);
         $this->assertEquals(5, $stub->count());
     }
-
-    private function assertObjectHasProperty(string $propertyName, object $object): void
-    {
-        $hasProperty = (new ReflectionObject($object))->hasProperty($propertyName);
-        $this->assertTrue($hasProperty, sprintf("Object has no attribute %s", $propertyName));
-    }
 }
 
 class MyClassWithPrivateProperties

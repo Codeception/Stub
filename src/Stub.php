@@ -9,7 +9,8 @@ use Codeception\Stub\ConsecutiveMap;
 use Codeception\Stub\StubMarshaler;
 use Exception;
 use LogicException;
-use PHPUnit\Framework\MockObject\Generator;
+use PHPUnit\Framework\MockObject\Generator as LegacyGenerator;
+use PHPUnit\Framework\MockObject\Generator\Generator;
 use PHPUnit\Framework\MockObject\MockObject as PHPUnitMockObject;
 use PHPUnit\Framework\MockObject\Rule\AnyInvokedCount;
 use PHPUnit\Framework\MockObject\Stub\ConsecutiveCalls;
@@ -433,7 +434,12 @@ class Stub
     {
         $testCase = self::extractTestCaseFromArgs($args);
         $methodName = $isAbstract ? 'getMockForAbstractClass' : 'getMock';
-        $generatorClass = new Generator;
+        // PHPUnit 10.3 changed the namespace
+        if (version_compare(PHPUnitVersion::series(), '10.3', '>=')) {
+            $generatorClass = new Generator();
+        } else {
+            $generatorClass = new LegacyGenerator();
+        }
 
         // using PHPUnit 5.4 mocks registration
         if (version_compare(PHPUnitVersion::series(), '5.4', '>=')
