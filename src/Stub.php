@@ -441,18 +441,13 @@ class Stub
             $generatorClass = new LegacyGenerator();
         }
 
-        // using PHPUnit 5.4 mocks registration
-        if (version_compare(PHPUnitVersion::series(), '5.4', '>=')
-            && $testCase instanceof PHPUnitTestCase
-        ) {
-            $mock = call_user_func_array([$generatorClass, $methodName], $args);
-            $testCase->registerMockObject($mock);
-            return $mock;
-        }
+        $mock = call_user_func_array([$generatorClass, $methodName], $args);
+
         if ($testCase instanceof PHPUnitTestCase) {
-            $generatorClass = $testCase;
+            $testCase->registerMockObject($mock);
         }
-        return call_user_func_array([$generatorClass, $methodName], $args);
+
+        return $mock;
     }
 
     private static function extractTestCaseFromArgs(&$args)
