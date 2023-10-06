@@ -415,7 +415,12 @@ class Stub
 
     private static function generateMock()
     {
-        return self::doGenerateMock(func_get_args());
+        $args = func_get_args();
+        if (version_compare(PHPUnitVersion::series(), '10.4', '>=') && !is_bool($args[1])) {
+            array_splice($args, 1, 0, [true]);
+        }
+
+        return self::doGenerateMock($args);
     }
 
     /**
