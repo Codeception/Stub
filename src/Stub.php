@@ -433,7 +433,14 @@ class Stub
     private static function doGenerateMock($args, $isAbstract = false)
     {
         $testCase = self::extractTestCaseFromArgs($args);
-        $methodName = $isAbstract ? 'getMockForAbstractClass' : 'getMock';
+
+        // PHPUnit 10.4 changed method names
+        if (version_compare(PHPUnitVersion::series(), '10.4', '>=')) {
+            $methodName = $isAbstract ? 'mockObjectForAbstractClass' : 'testDouble';
+        } else {
+            $methodName = $isAbstract ? 'getMockForAbstractClass' : 'getMock';
+        }
+
         // PHPUnit 10.3 changed the namespace
         if (version_compare(PHPUnitVersion::series(), '10.3', '>=')) {
             $generatorClass = new Generator();
