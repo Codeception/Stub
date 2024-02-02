@@ -416,7 +416,19 @@ class Stub
     private static function generateMock()
     {
         $args = func_get_args();
-        if (version_compare(PHPUnitVersion::series(), '10.4', '>=') && !is_bool($args[1])) {
+        if (version_compare(PHPUnitVersion::series(), '11', '>=')) {
+            if (!is_bool($args[1]) || !is_bool($args[2])) {
+                $additionalParameters = [];
+                if (!is_bool($args[1])) {
+                    $additionalParameters[] = true;
+                }
+                if (!is_bool($args[2])) {
+                    $additionalParameters[] = true;
+                }
+
+                array_splice($args, 1, 0, $additionalParameters);
+            }
+        } elseif (version_compare(PHPUnitVersion::series(), '10.4', '>=') && !is_bool($args[1])) {
             array_splice($args, 1, 0, [true]);
         }
 
