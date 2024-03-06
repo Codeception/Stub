@@ -13,9 +13,9 @@ use PHPUnit\Framework\MockObject\Generator as LegacyGenerator;
 use PHPUnit\Framework\MockObject\Generator\Generator;
 use PHPUnit\Framework\MockObject\MockObject as PHPUnitMockObject;
 use PHPUnit\Framework\MockObject\Rule\AnyInvokedCount;
-use PHPUnit\Framework\MockObject\Stub\ConsecutiveCalls;
 use PHPUnit\Framework\MockObject\Stub\ReturnCallback;
 use PHPUnit\Framework\MockObject\Stub\ReturnStub;
+use PHPUnit\Framework\MockObject\Stub\Stub as MockObjectStub;
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 use PHPUnit\Runner\Version as PHPUnitVersion;
 use ReflectionClass;
@@ -522,7 +522,7 @@ class Stub
                     $mock
                         ->expects($marshaler->getMatcher())
                         ->method($param)
-                        ->will(new ReturnCallback($marshaler->getValue()));
+                        ->will($marshaler->getValue());
                 } elseif ($value instanceof Closure) {
                     $mock
                         ->expects(new AnyInvokedCount)
@@ -533,7 +533,13 @@ class Stub
                     $mock
                         ->expects(new AnyInvokedCount)
                         ->method($param)
-                        ->will(new ConsecutiveCalls($consecutiveMap->getMap()));
+                        ->will($consecutiveMap);
+                } elseif ($value instanceof MockObjectStub) {
+                    $stub = $value;
+                    $mock
+                        ->expects(new AnyInvokedCount)
+                        ->method($param)
+                        ->will($stub);
                 } else {
                     $mock
                         ->expects(new AnyInvokedCount)
@@ -607,6 +613,10 @@ class Stub
      * $user->getName(); //sam
      * $user->getName(); //amy
      * ```
+     * 
+     * It also takes in PHPUnit Stubs.
+     * 
+     * $user = Stub::make('User', ['getName' => Stub::consecutive(new ReturnCallback([fn() => 'david', fn() => 'emma', fn() => 'sam', fn() => 'amy']))]);
      */
     public static function consecutive(): ConsecutiveMap
     {
