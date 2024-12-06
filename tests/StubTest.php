@@ -7,7 +7,9 @@ require_once __DIR__ .'/ResetMocks.php';
 use Codeception\Stub;
 use Codeception\Stub\StubMarshaler;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\NoMoreReturnValuesConfiguredException;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Runner\Version as PHPUnitVersion;
 
 final class StubTest extends TestCase
 {
@@ -363,7 +365,14 @@ final class StubTest extends TestCase
         $this->assertEquals('amy', $dummy->helloWorld());
 
         // Expected null value when no more values
-        $this->assertNull($dummy->helloWorld());
+        // For PHP 10.5.30 or higher an exception is thrown
+        // https://github.com/sebastianbergmann/phpunit/commit/490879817a1417fd5fa1149a47b6f2f1b70ada6a
+        if (version_compare(PHPUnitVersion::id(), '10.5.30', '>=')) {
+            $this->expectException(NoMoreReturnValuesConfiguredException::class);
+            $dummy->helloWorld();
+        } else {
+            $this->assertNull($dummy->helloWorld());
+        }
     }
 
     public function testStubPrivateProperties()
