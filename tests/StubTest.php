@@ -6,6 +6,7 @@ require_once __DIR__ .'/ResetMocks.php';
 
 use Codeception\Stub;
 use Codeception\Stub\StubMarshaler;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\MockObject\NoMoreReturnValuesConfiguredException;
 use PHPUnit\Framework\TestCase;
@@ -231,6 +232,7 @@ final class StubTest extends TestCase
     /**
      * @dataProvider matcherAndFailMessageProvider
      */
+    #[DataProvider('matcherAndFailMessageProvider')]
     public function testExpectedMethodIsCalledFail(StubMarshaler $stubMarshaler, string $failMessage)
     {
         $mock = Stub::makeEmptyExcept('DummyClass', 'call', ['targetMethod' => $stubMarshaler], $this);
@@ -282,6 +284,7 @@ final class StubTest extends TestCase
     /**
      * @dataProvider matcherProvider
      */
+    #[DataProvider('matcherProvider')]
     public function testMethodMatcherWithMake(int $count, StubMarshaler $matcher, $expected = false)
     {
         $dummy = Stub::make('DummyClass', ['goodByeWorld' => $matcher], $this);
@@ -292,6 +295,7 @@ final class StubTest extends TestCase
     /**
      * @dataProvider matcherProvider
      */
+    #[DataProvider('matcherProvider')]
     public function testMethodMatcherWithMakeEmpty(int $count, StubMarshaler $matcher)
     {
         $dummy = Stub::makeEmpty('DummyClass', ['goodByeWorld' => $matcher], $this);
@@ -302,6 +306,7 @@ final class StubTest extends TestCase
     /**
      * @dataProvider matcherProvider
      */
+    #[DataProvider('matcherProvider')]
     public function testMethodMatcherWithMakeEmptyExcept(int $count, StubMarshaler $matcher)
     {
         $dummy = Stub::makeEmptyExcept('DummyClass', 'getCheckMe', ['goodByeWorld' => $matcher], $this);
@@ -312,6 +317,7 @@ final class StubTest extends TestCase
     /**
      * @dataProvider matcherProvider
      */
+    #[DataProvider('matcherProvider')]
     public function testMethodMatcherWithConstruct(int $count, StubMarshaler $matcher)
     {
         $dummy = Stub::construct('DummyClass', [], ['goodByeWorld' => $matcher], $this);
@@ -322,6 +328,7 @@ final class StubTest extends TestCase
     /**
      * @dataProvider matcherProvider
      */
+    #[DataProvider('matcherProvider')]
     public function testMethodMatcherWithConstructEmpty(int $count, StubMarshaler $matcher)
     {
         $dummy = Stub::constructEmpty('DummyClass', [], ['goodByeWorld' => $matcher], $this);
@@ -332,6 +339,7 @@ final class StubTest extends TestCase
     /**
      * @dataProvider matcherProvider
      */
+    #[DataProvider('matcherProvider')]
     public function testMethodMatcherWithConstructEmptyExcept(int $count, StubMarshaler $matcher)
     {
         $dummy = Stub::constructEmptyExcept(
