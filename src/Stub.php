@@ -550,7 +550,6 @@ class Stub
                 }
             } elseif ($reflectionClass->hasProperty($param)) {
                 $reflectionProperty = $reflectionClass->getProperty($param);
-                $reflectionProperty->setAccessible(true);
                 $reflectionProperty->setValue($mock, $value);
             } else {
                 if ($reflectionClass->hasMethod('__set')) {
