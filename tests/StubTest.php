@@ -274,11 +274,11 @@ final class StubTest extends TestCase
             [1, Stub\Expected::once()],
             [2, Stub\Expected::atLeastOnce()],
             [3, Stub\Expected::exactly(3)],
-            [1, Stub\Expected::once(fn(): bool => true), true],
-            [2, Stub\Expected::atLeastOnce(fn(): array => []), []],
-            [1, Stub\Expected::exactly(1, fn() => null), null],
-            [1, Stub\Expected::exactly(1, fn(): string => 'hello world!'), 'hello world!'],
-            [1, Stub\Expected::exactly(1, 'hello world!'), 'hello world!'],
+            [1, Stub\Expected::once(fn(): bool => true)],
+            [2, Stub\Expected::atLeastOnce(fn(): array => [])],
+            [1, Stub\Expected::exactly(1, fn() => null)],
+            [1, Stub\Expected::exactly(1, fn(): string => 'hello world!')],
+            [1, Stub\Expected::exactly(1, 'hello world!')],
         ];
     }
 
