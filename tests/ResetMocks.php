@@ -11,7 +11,6 @@ trait ResetMocks
             $refl = $refl->getParentClass();
         }
         $prop = $refl->getProperty('mockObjects');
-        $prop->setAccessible(true);
         $prop->setValue($this, array());
     }
 }
