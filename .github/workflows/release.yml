@@ -47,3 +47,7 @@ jobs:
           -- semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+permissions:
+  packages: write
+  contents: write
+  pull-requests: write
