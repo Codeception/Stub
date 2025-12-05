@@ -476,7 +476,11 @@ class Stub
         $mock = call_user_func_array([$generatorClass, $methodName], $args);
 
         if ($testCase instanceof PHPUnitTestCase) {
-            $testCase->registerMockObject($mock);
+            if (version_compare(PHPUnitVersion::series(), '12.5', '>=')) {
+                $testCase->registerMockObject($mock::class, $mock);
+            } else {
+                $testCase->registerMockObject($mock);
+            }
         }
 
         return $mock;
