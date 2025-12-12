@@ -18,7 +18,7 @@ class Expected
      *
      * ```php
      * <?php
-     * use \Codeception\Stub\Expected;
+     * use Codeception\Stub\Expected;
      *
      * $user = $this->make('User', [
      *      'getName' => Expected::never(),
@@ -46,7 +46,7 @@ class Expected
      *
      * ```php
      * <?php
-     * use \Codeception\Stub\Expected;
+     * use Codeception\Stub\Expected;
      *
      * $user = $this->make(
      *     'User',
@@ -83,7 +83,7 @@ class Expected
      *
      * ```php
      * <?php
-     * use \Codeception\Stub\Expected;
+     * use Codeception\Stub\Expected;
      *
      * $user = $this->make(
      *     'User',
@@ -124,8 +124,8 @@ class Expected
      *
      * ``` php
      * <?php
-     * use \Codeception\Stub;
-     * use \Codeception\Stub\Expected;
+     * use Codeception\Stub;
+     * use Codeception\Stub\Expected;
      *
      * $user = $this->make(
      *     'User',
