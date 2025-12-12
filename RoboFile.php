@@ -30,8 +30,8 @@ class RoboFile extends Tasks
                 ->filterMethods(function(ReflectionMethod $method) {
                     if ($method->isConstructor() or $method->isDestructor()) return false;
                     if (!$method->isPublic()) return false;
-                    if (strpos($method->name, '_') === 0) return false;
-                    if (strpos($method->name, 'stub') === 0) return false;
+                    if (str_starts_with($method->name, '_')) return false;
+                    if (str_starts_with($method->name, 'stub')) return false;
                     return true;
                 })
                 ->processMethodDocBlock(
