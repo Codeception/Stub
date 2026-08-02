@@ -90,6 +90,43 @@ final class StubTest extends TestCase
         $this->assertEquals('checked!', $dummy->checkMeToo);
     }
 
+    public function testHookedPropertyReplacedAndUpdated()
+    {
+        $this->requireHookedPropertyClass();
+
+        $first = Stub::makeEmpty('DummyHookedPropertyClass', ['checkMe' => 'one']);
+        $this->assertSame('one', $first->checkMe);
+
+        Stub::update($first, ['checkMe' => 'two']);
+        $this->assertSame('two', $first->checkMe);
+
+        $second = Stub::make('DummyHookedPropertyClass', ['checkMe' => 'three']);
+        $this->assertSame('three', $second->checkMe);
+        $this->assertSame('two', $first->checkMe);
+
+        // a virtual property has no backing store to write to at all
+        $this->assertSame('checked!', Stub::makeEmpty('DummyHookedPropertyClass', ['virtual' => 'checked!'])->virtual);
+    }
+
+    public function testHookedPropertyNotDoubledByPHPUnit()
+    {
+        $this->requireHookedPropertyClass();
+
+        $dummy = Stub::makeEmpty('DummyHookedPropertyClass', ['finalHook' => 'checked!', 'protectedHook' => 'checked!']);
+        $this->assertSame('checked!', $dummy->finalHook);
+        $this->assertSame('checked!', (new ReflectionProperty($dummy, 'protectedHook'))->getValue($dummy));
+    }
+
+    private function requireHookedPropertyClass(): void
+    {
+        if (PHP_VERSION_ID < 80400) {
+            $this->markTestSkipped('Property hooks require PHP 8.4.');
+        }
+
+        // not a .php file: property hook syntax would break linting the package on PHP 8.1 - 8.3
+        require_once __DIR__ . '/_data/DummyHookedPropertyClass.inc';
+    }
+
     public function testMakeMethodSimplyReplaced()
     {
         $dummy = Stub::make('DummyClass', ['helloWorld' => 'good bye world']);

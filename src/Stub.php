@@ -18,13 +18,19 @@ use PHPUnit\Framework\MockObject\Stub\ReturnCallback;
 use PHPUnit\Framework\MockObject\Stub\ReturnStub;
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 use PHPUnit\Runner\Version as PHPUnitVersion;
+use PropertyHookType;
 use ReflectionClass;
 use ReflectionException;
+use ReflectionProperty;
 use RuntimeException;
+use WeakMap;
 
 class Stub
 {
     public static array $magicMethods = ['__isset', '__get', '__set'];
+
+    /** @var WeakMap<PHPUnitMockObject, array<string, mixed>>|null */
+    private static ?WeakMap $hookedPropertyValues = null;
 
     /**
      * Instantiates a class without executing a constructor.
@@ -553,8 +559,37 @@ class Stub
                         ->will(new ReturnStub($value));
                 }
             } elseif ($reflectionClass->hasProperty($param)) {
-                $reflectionProperty = $reflectionClass->getProperty($param);
-                $reflectionProperty->setValue($mock, $value);
+                // PHPUnit redeclares public hooked properties on the mock with a separate backing store.
+                if (
+                    PHP_VERSION_ID >= 80400
+                    && $mock instanceof PHPUnitMockObject
+                    && property_exists($mock, $param)
+                ) {
+                    $mockProperty = new ReflectionProperty($mock, $param);
+                    $getter = $mockProperty->getHook(PropertyHookType::Get);
+
+                    if (
+                        $mockProperty->getDeclaringClass()->getName() === $mock::class
+                        && $getter?->isFinal() === false
+                    ) {
+                        self::$hookedPropertyValues ??= new WeakMap();
+                        $values = self::$hookedPropertyValues[$mock] ?? [];
+
+                        if (!array_key_exists($param, $values)) {
+                            $mock
+                                ->expects(new AnyInvokedCount)
+                                ->method($getter->getName())
+                                ->will(new ReturnCallback(static fn() => self::$hookedPropertyValues[$mock][$param]));
+                        }
+
+                        $values[$param] = $value;
+                        self::$hookedPropertyValues[$mock] = $values;
+
+                        continue;
+                    }
+                }
+
+                $reflectionClass->getProperty($param)->setValue($mock, $value);
             } else {
                 if ($reflectionClass->hasMethod('__set')) {
                     try {
